@@ -1,0 +1,57 @@
+import mongoose from "mongoose";
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    description: "Full name of the user",
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    description: "Unique email address of the user",
+    lowercase: true,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    description: "Password for user authentication",
+    minlength: [8, "Password must be at least 8 characters long"],
+    select: false,
+    unique: true,
+    trim: true,
+  },
+  role: {
+    type: String,
+    enum: ["Admin", "Seller", "Buyer"],
+    default: "Buyer",
+    trim: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    description: "Timestamp when the user was created",
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+    description: "Timestamp when the user was last updated",
+  },
+  address: {
+    type: String,
+    description: "Address of the user",
+    trim: true,
+  },
+  phone: {
+    type: String,
+    description: "Phone number of the user",
+    trim: true,
+  },
+});
+
+const Farmer = mongoose.model("Farmer", userSchema);
+
+export default Farmer;
